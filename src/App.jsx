@@ -5,11 +5,9 @@ function App() {
  
 
   return (
-    <div className='parent-wrap'>
+    <>
       <Recommendation/>
-    <br />
-    <br />
-    </div>
+      </>
   )
 }
 
