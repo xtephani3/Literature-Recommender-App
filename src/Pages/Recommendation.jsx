@@ -72,9 +72,8 @@ export function Recommendation() {
         try {
             const url =
                 "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
-                
-            const GEMINI_API_KEY = "ADDED KEY ONLY ON PLAY.IO FOR SECURITY REASONS";
 
+            const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
@@ -103,47 +102,47 @@ export function Recommendation() {
 
     return (<section>
         <div className="parent-wrap">
-        <div className="select-container">
-        <SelectField
-            placeholder="Please select a genre"
-            id="genre"
-            options={Genre}
-            onSelect={(e) => dispatch({ type: 'SET_GENRE', selectData: e.target.value })}
-            value={state.genre}
-        />
+            <div className="select-container">
+                <SelectField
+                    placeholder="Please select a genre"
+                    id="genre"
+                    options={Genre}
+                    onSelect={(e) => dispatch({ type: 'SET_GENRE', selectData: e.target.value })}
+                    value={state.genre}
+                />
 
-        <SelectField
-            placeholder="Please select a mood"
-            id="mood"
-            options={state.availableMoodBasedOnGenre}
-            onSelect={(e) => dispatch({ type: 'SET_MOOD', selectData: e.target.value })}
+                <SelectField
+                    placeholder="Please select a mood"
+                    id="mood"
+                    options={state.availableMoodBasedOnGenre}
+                    onSelect={(e) => dispatch({ type: 'SET_MOOD', selectData: e.target.value })}
 
-        />
+                />
 
-        <SelectField
-            placeholder="Please select a level"
-            id="level"
-            options={['Beginner', "Intermediate", "Expert"]}
-            onSelect={(e) => dispatch({ type: 'SET_LEVEL', selectData: e.target.value })}
+                <SelectField
+                    placeholder="Please select a level"
+                    id="level"
+                    options={['Beginner', "Intermediate", "Expert"]}
+                    onSelect={(e) => dispatch({ type: 'SET_LEVEL', selectData: e.target.value })}
 
-        />
-        </div>
+                />
+            </div>
 
-        {state.isLoading ? <b>Loading...</b> : <button onClick={fetchRecommendations}>
-            Get Recommendation
-        </button>}
-        <br />
-        <br />
-        {
-            state.aiResponses.map((recommend, index) => {
-                return (
-                    <details key={index} name="recommendation">
-                        <summary>Recommendation {index + 1}</summary>
-                        <p> {recommend?.content?.parts[0]?.text}</p>
-                    </details>
-                )
-            })
-        }
+            {state.isLoading ? <b>Loading...</b> : <button onClick={fetchRecommendations}>
+                Get Recommendation
+            </button>}
+            <br />
+            <br />
+            {
+                state.aiResponses.map((recommend, index) => {
+                    return (
+                        <details key={index} name="recommendation">
+                            <summary>Recommendation {index + 1}</summary>
+                            <p> {recommend?.content?.parts[0]?.text}</p>
+                        </details>
+                    )
+                })
+            }
         </div>
     </section>)
 }
